@@ -1,0 +1,31 @@
+type Favorite {
+    id: ID!
+    userId: ID
+    bands: [Band]
+    genres: [Genre]
+    artists: [Artist]
+    tracks: [Track]
+}
+
+input CreateFavoriteInput {
+    userId: ID
+    bands: [ID]
+    genres: [ID]
+    artists: [ID]
+    tracks: [ID]
+}
+
+input UpdateFavoriteInput {
+  id: Int!
+}
+
+type Query {
+  favorites: [Favorite]!
+  favorite(id: Int!): Favorite
+}
+
+type Mutation {
+  createFavorite(createFavoriteInput: CreateFavoriteInput!): Favorite!
+  updateFavorite(updateFavoriteInput: UpdateFavoriteInput!): Favorite!
+  removeFavorite(id: Int!): Favorite
+}
