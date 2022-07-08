@@ -18,17 +18,17 @@ export class BandsResolver {
   }
 
   @Query('band')
-  findOne(@Args('id') id: number) {
+  findOne(@Args('id') id: string) {
     return this.bandsService.findOne(id);
   }
 
   @Mutation('updateBand')
   update(@Args('updateBandInput') updateBandInput: UpdateBandInput) {
-    return this.bandsService.update(updateBandInput.id, updateBandInput);
+    return this.bandsService.update(updateBandInput);
   }
 
   @Mutation('removeBand')
-  remove(@Args('id') id: number) {
+  remove(@Args('id') id: string) {
     return this.bandsService.remove(id);
   }
 }

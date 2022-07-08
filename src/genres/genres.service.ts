@@ -1,26 +1,55 @@
 import { Injectable } from '@nestjs/common';
 import { CreateGenreInput } from './dto/create-genre.input';
 import { UpdateGenreInput } from './dto/update-genre.input';
+import { GenresAPI } from '../datasources/genres.api';
+import { ListGenreInput } from './dto/lists-genre.input';
+import axios from 'axios';
 
 @Injectable()
 export class GenresService {
+  private client: any;
+  constructor(private readonly genresAPI: GenresAPI) {
+    this.client = axios.create({
+      baseURL: 'http://localhost:3001/v1/',
+    });
+  }
+
   create(createGenreInput: CreateGenreInput) {
-    return 'This action adds a new genre';
+    return this.genresAPI.createGenre(createGenreInput);
   }
 
-  findAll() {
-    return `This action returns all genres`;
+  async findAll(paginationQuery: ListGenreInput) {
+    try {
+      const { limit, offset } = paginationQuery;
+      const response = await this.client.get(
+        `genres?limit=${limit}&offset=${offset}`,
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+    // try {
+    //   const { limit, offset } = paginationQuery;
+    //   return await this.genresAPI.getGenres({ limit, offset });
+    // } catch (error) {
+    //   console.log(error);
+    // }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} genre`;
+  async findOne(id: string) {
+    try {
+      const response = await this.client.get(`genres/${id}`);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  update(id: number, updateGenreInput: UpdateGenreInput) {
-    return `This action updates a #${id} genre`;
+  update(updateGenreInput: UpdateGenreInput) {
+    return this.genresAPI.updateGenre(updateGenreInput);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} genre`;
+  remove(id: string) {
+    return this.genresAPI.deleteGenre(id);
   }
 }

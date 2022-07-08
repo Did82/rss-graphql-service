@@ -1,5 +1,5 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
-import { Track } from '../graphql';
+import { CreateTrackInput, Track, UpdateTrackInput } from '../graphql';
 
 export class TracksAPI extends RESTDataSource {
   constructor() {
@@ -8,30 +8,22 @@ export class TracksAPI extends RESTDataSource {
   }
 
   async getTracks(): Promise<Track[]> {
-    const tracks = await this.get('tracks');
-    return tracks;
+    return await this.get('tracks');
   }
 
-  async getTrack(id: number): Promise<Track> {
-    const track = await this.get(`tracks/${encodeURIComponent(id)}`);
-    return track;
+  async getTrack(id: string): Promise<Track> {
+    return await this.get(`tracks/${encodeURIComponent(id)}`);
   }
 
-  async createTrack(track: Track): Promise<Track> {
-    const newTrack = await this.post('tracks', track);
-    return newTrack;
+  async createTrack(track: CreateTrackInput): Promise<Track> {
+    return await this.post('tracks', track);
   }
 
-  async updateTrack(track: Track): Promise<Track> {
-    const updatedTrack = await this.put(
-      `tracks/${encodeURIComponent(track.id)}`,
-      track,
-    );
-    return updatedTrack;
+  async updateTrack(track: UpdateTrackInput): Promise<Track> {
+    return await this.put(`tracks/${encodeURIComponent(track.id)}`, track);
   }
 
-  async deleteTrack(id: number): Promise<Track> {
-    const deletedTrack = await this.delete(`tracks/${encodeURIComponent(id)}`);
-    return deletedTrack;
+  async deleteTrack(id: string): Promise<Track> {
+    return await this.delete(`tracks/${encodeURIComponent(id)}`);
   }
 }

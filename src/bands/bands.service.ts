@@ -1,26 +1,29 @@
 import { Injectable } from '@nestjs/common';
 import { CreateBandInput } from './dto/create-band.input';
 import { UpdateBandInput } from './dto/update-band.input';
+import { BandsAPI } from '../datasources/bands.api';
 
 @Injectable()
 export class BandsService {
+  constructor(private readonly bandsAPI: BandsAPI) {}
+
   create(createBandInput: CreateBandInput) {
-    return 'This action adds a new band';
+    return this.bandsAPI.createBand(createBandInput);
   }
 
   findAll() {
-    return `This action returns all bands`;
+    return this.bandsAPI.getBands();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} band`;
+  findOne(id: string) {
+    return this.bandsAPI.getBand(id);
   }
 
-  update(id: number, updateBandInput: UpdateBandInput) {
-    return `This action updates a #${id} band`;
+  update(updateBandInput: UpdateBandInput) {
+    return this.bandsAPI.updateBand(updateBandInput);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} band`;
+  remove(id: string) {
+    return this.bandsAPI.deleteBand(id);
   }
 }

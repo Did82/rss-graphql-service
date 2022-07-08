@@ -16,16 +16,16 @@ input CreateFavoriteInput {
 }
 
 input UpdateFavoriteInput {
-  id: Int!
+  id: ID!
 }
 
 type Query {
   favorites: [Favorite]!
-  favorite(id: Int!): Favorite
+  favorite(id: ID!): Favorite
 }
 
 type Mutation {
   createFavorite(createFavoriteInput: CreateFavoriteInput!): Favorite!
   updateFavorite(updateFavoriteInput: UpdateFavoriteInput!): Favorite!
-  removeFavorite(id: Int!): Favorite
+  removeFavorite(id: ID!): Favorite
 }

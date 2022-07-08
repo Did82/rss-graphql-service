@@ -18,7 +18,7 @@ export class CreateAlbumInput {
 }
 
 export class UpdateAlbumInput {
-    id: number;
+    id: string;
 }
 
 export class CreateArtistInput {
@@ -51,7 +51,7 @@ export class CreateBandInput {
 }
 
 export class UpdateBandInput {
-    id: number;
+    id: string;
 }
 
 export class CreateFavoriteInput {
@@ -63,7 +63,7 @@ export class CreateFavoriteInput {
 }
 
 export class UpdateFavoriteInput {
-    id: number;
+    id: string;
 }
 
 export class CreateGenreInput {
@@ -74,7 +74,7 @@ export class CreateGenreInput {
 }
 
 export class UpdateGenreInput {
-    id: number;
+    id: string;
 }
 
 export class CreateTrackInput {
@@ -88,7 +88,7 @@ export class CreateTrackInput {
 }
 
 export class UpdateTrackInput {
-    id: number;
+    id: string;
 }
 
 export class CreateUserInput {
@@ -99,7 +99,7 @@ export class CreateUserInput {
 }
 
 export class UpdateUserInput {
-    id: number;
+    id: string;
 }
 
 export class Album {
@@ -116,7 +116,7 @@ export class Album {
 export abstract class IQuery {
     abstract albums(): Nullable<Album>[] | Promise<Nullable<Album>[]>;
 
-    abstract album(id: number): Nullable<Album> | Promise<Nullable<Album>>;
+    abstract album(id: string): Nullable<Album> | Promise<Nullable<Album>>;
 
     abstract artists(): Nullable<Artist>[] | Promise<Nullable<Artist>[]>;
 
@@ -124,23 +124,23 @@ export abstract class IQuery {
 
     abstract bands(): Nullable<Band>[] | Promise<Nullable<Band>[]>;
 
-    abstract band(id: number): Nullable<Band> | Promise<Nullable<Band>>;
+    abstract band(id: string): Nullable<Band> | Promise<Nullable<Band>>;
 
     abstract favorites(): Nullable<Favorite>[] | Promise<Nullable<Favorite>[]>;
 
-    abstract favorite(id: number): Nullable<Favorite> | Promise<Nullable<Favorite>>;
+    abstract favorite(id: string): Nullable<Favorite> | Promise<Nullable<Favorite>>;
 
-    abstract genres(): Nullable<Genre>[] | Promise<Nullable<Genre>[]>;
+    abstract genres(limit?: Nullable<number>, offset?: Nullable<number>): Nullable<Genres> | Promise<Nullable<Genres>>;
 
-    abstract genre(id: number): Nullable<Genre> | Promise<Nullable<Genre>>;
+    abstract genre(id: string): Nullable<Genre> | Promise<Nullable<Genre>>;
 
     abstract tracks(): Nullable<Track>[] | Promise<Nullable<Track>[]>;
 
-    abstract track(id: number): Nullable<Track> | Promise<Nullable<Track>>;
+    abstract track(id: string): Nullable<Track> | Promise<Nullable<Track>>;
 
     abstract users(): Nullable<User>[] | Promise<Nullable<User>[]>;
 
-    abstract user(id: number): Nullable<User> | Promise<Nullable<User>>;
+    abstract user(id: string): Nullable<User> | Promise<Nullable<User>>;
 }
 
 export abstract class IMutation {
@@ -148,7 +148,7 @@ export abstract class IMutation {
 
     abstract updateAlbum(updateAlbumInput: UpdateAlbumInput): Album | Promise<Album>;
 
-    abstract removeAlbum(id: number): Nullable<Album> | Promise<Nullable<Album>>;
+    abstract removeAlbum(id: string): Nullable<Album> | Promise<Nullable<Album>>;
 
     abstract createArtist(createArtistInput: CreateArtistInput): Artist | Promise<Artist>;
 
@@ -160,31 +160,33 @@ export abstract class IMutation {
 
     abstract updateBand(updateBandInput: UpdateBandInput): Band | Promise<Band>;
 
-    abstract removeBand(id: number): Nullable<Band> | Promise<Nullable<Band>>;
+    abstract removeBand(id: string): Nullable<Band> | Promise<Nullable<Band>>;
 
     abstract createFavorite(createFavoriteInput: CreateFavoriteInput): Favorite | Promise<Favorite>;
 
     abstract updateFavorite(updateFavoriteInput: UpdateFavoriteInput): Favorite | Promise<Favorite>;
 
-    abstract removeFavorite(id: number): Nullable<Favorite> | Promise<Nullable<Favorite>>;
+    abstract removeFavorite(id: string): Nullable<Favorite> | Promise<Nullable<Favorite>>;
 
     abstract createGenre(createGenreInput: CreateGenreInput): Genre | Promise<Genre>;
 
     abstract updateGenre(updateGenreInput: UpdateGenreInput): Genre | Promise<Genre>;
 
-    abstract removeGenre(id: number): Nullable<Genre> | Promise<Nullable<Genre>>;
+    abstract removeGenre(id: string): Nullable<Genre> | Promise<Nullable<Genre>>;
 
     abstract createTrack(createTrackInput: CreateTrackInput): Track | Promise<Track>;
 
     abstract updateTrack(updateTrackInput: UpdateTrackInput): Track | Promise<Track>;
 
-    abstract removeTrack(id: number): Nullable<Track> | Promise<Nullable<Track>>;
+    abstract removeTrack(id: string): Nullable<Track> | Promise<Nullable<Track>>;
 
-    abstract createUser(createUserInput: CreateUserInput): User | Promise<User>;
+    abstract registerUser(createUserInput: CreateUserInput): User | Promise<User>;
 
     abstract updateUser(updateUserInput: UpdateUserInput): User | Promise<User>;
 
-    abstract removeUser(id: number): Nullable<User> | Promise<Nullable<User>>;
+    abstract removeUser(id: string): Nullable<User> | Promise<Nullable<User>>;
+
+    abstract loginUser(email: string, password: string): Nullable<User> | Promise<Nullable<User>>;
 }
 
 export class Artist {
@@ -218,11 +220,18 @@ export class Favorite {
 }
 
 export class Genre {
-    id: string;
+    _id: string;
     name?: Nullable<string>;
     description?: Nullable<string>;
     country?: Nullable<string>;
     year?: Nullable<number>;
+}
+
+export class Genres {
+    items?: Nullable<Nullable<Genre>[]>;
+    limit?: Nullable<number>;
+    offset?: Nullable<number>;
+    total?: Nullable<number>;
 }
 
 export class Track {

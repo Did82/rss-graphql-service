@@ -14,10 +14,8 @@ import { BandsAPI } from './datasources/bands.api';
 import { GenresAPI } from './datasources/genres.api';
 import { AlbumsAPI } from './datasources/albums.api';
 import { TracksAPI } from './datasources/tracks.api';
-
-class FavoritesAPI {}
-
-class UsersAPI {}
+import { FavoritesAPI } from './datasources/favorites.api';
+import { UsersAPI } from './datasources/users.api';
 
 @Module({
   imports: [
@@ -30,15 +28,17 @@ class UsersAPI {}
         path: join(process.cwd(), 'src/graphql.ts'),
         outputAs: 'class',
       },
-      dataSources: () => ({
-        ArtistsAPI: new ArtistsAPI(),
-        BandsAPI: new BandsAPI(),
-        GenresAPI: new GenresAPI(),
-        AlbumsAPI: new AlbumsAPI(),
-        TracksAPI: new TracksAPI(),
-        FavoritesAPI: new FavoritesAPI(),
-        UsersAPI: new UsersAPI(),
-      }),
+      dataSources: () => {
+        return {
+          ArtistsAPI: new ArtistsAPI(),
+          BandsAPI: new BandsAPI(),
+          GenresAPI: new GenresAPI(),
+          AlbumsAPI: new AlbumsAPI(),
+          TracksAPI: new TracksAPI(),
+          FavoritesAPI: new FavoritesAPI(),
+          UsersAPI: new UsersAPI(),
+        };
+      },
     }),
     ArtistsModule,
     BandsModule,

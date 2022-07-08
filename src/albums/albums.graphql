@@ -20,16 +20,16 @@ input CreateAlbumInput {
 }
 
 input UpdateAlbumInput {
-  id: Int!
+  id: ID!
 }
 
 type Query {
   albums: [Album]!
-  album(id: Int!): Album
+  album(id: ID!): Album
 }
 
 type Mutation {
   createAlbum(createAlbumInput: CreateAlbumInput!): Album!
   updateAlbum(updateAlbumInput: UpdateAlbumInput!): Album!
-  removeAlbum(id: Int!): Album
+  removeAlbum(id: ID!): Album
 }

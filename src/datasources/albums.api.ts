@@ -1,5 +1,5 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
-import { Album } from '../graphql';
+import { Album, CreateAlbumInput, UpdateAlbumInput } from '../graphql';
 
 export class AlbumsAPI extends RESTDataSource {
   constructor() {
@@ -8,30 +8,22 @@ export class AlbumsAPI extends RESTDataSource {
   }
 
   async getAlbums(): Promise<Album[]> {
-    const albums = await this.get('albums');
-    return albums;
+    return await this.get('albums');
   }
 
-  async getAlbum(id: number): Promise<Album> {
-    const album = await this.get(`albums/${encodeURIComponent(id)}`);
-    return album;
+  async getAlbum(id: string): Promise<Album> {
+    return await this.get(`albums/${encodeURIComponent(id)}`);
   }
 
-  async createAlbum(album: Album): Promise<Album> {
-    const newAlbum = await this.post('albums', album);
-    return newAlbum;
+  async createAlbum(album: CreateAlbumInput): Promise<Album> {
+    return await this.post('albums', album);
   }
 
-  async updateAlbum(album: Album): Promise<Album> {
-    const updatedAlbum = await this.put(
-      `albums/${encodeURIComponent(album.id)}`,
-      album,
-    );
-    return updatedAlbum;
+  async updateAlbum(album: UpdateAlbumInput): Promise<Album> {
+    return await this.put(`albums/${encodeURIComponent(album.id)}`, album);
   }
 
-  async deleteAlbum(id: number): Promise<Album> {
-    const deletedAlbum = await this.delete(`albums/${encodeURIComponent(id)}`);
-    return deletedAlbum;
+  async deleteAlbum(id: string): Promise<Album> {
+    return await this.delete(`albums/${encodeURIComponent(id)}`);
   }
 }

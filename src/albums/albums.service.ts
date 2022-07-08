@@ -1,26 +1,29 @@
 import { Injectable } from '@nestjs/common';
 import { CreateAlbumInput } from './dto/create-album.input';
 import { UpdateAlbumInput } from './dto/update-album.input';
+import { AlbumsAPI } from '../datasources/albums.api';
 
 @Injectable()
 export class AlbumsService {
+  constructor(private readonly albumsAPI: AlbumsAPI) {}
+
   create(createAlbumInput: CreateAlbumInput) {
-    return 'This action adds a new album';
+    return this.albumsAPI.createAlbum(createAlbumInput);
   }
 
   findAll() {
-    return `This action returns all albums`;
+    return this.albumsAPI.getAlbums();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} album`;
+  findOne(id: string) {
+    return this.albumsAPI.getAlbum(id);
   }
 
-  update(id: number, updateAlbumInput: UpdateAlbumInput) {
-    return `This action updates a #${id} album`;
+  update(updateAlbumInput: UpdateAlbumInput) {
+    return this.albumsAPI.updateAlbum(updateAlbumInput);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} album`;
+  remove(id: string) {
+    return this.albumsAPI.deleteAlbum(id);
   }
 }

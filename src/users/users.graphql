@@ -14,16 +14,17 @@ input CreateUserInput {
 }
 
 input UpdateUserInput {
-  id: Int!
+    id: ID!
 }
 
 type Query {
-  users: [User]!
-  user(id: Int!): User
+    users: [User]!
+    user(id: ID!): User
 }
 
 type Mutation {
-  createUser(createUserInput: CreateUserInput!): User!
-  updateUser(updateUserInput: UpdateUserInput!): User!
-  removeUser(id: Int!): User
+    registerUser(createUserInput: CreateUserInput!): User!
+    updateUser(updateUserInput: UpdateUserInput!): User!
+    removeUser(id: ID!): User
+    loginUser(email: String!, password: String!): User
 }

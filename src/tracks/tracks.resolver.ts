@@ -18,17 +18,17 @@ export class TracksResolver {
   }
 
   @Query('track')
-  findOne(@Args('id') id: number) {
+  findOne(@Args('id') id: string) {
     return this.tracksService.findOne(id);
   }
 
   @Mutation('updateTrack')
   update(@Args('updateTrackInput') updateTrackInput: UpdateTrackInput) {
-    return this.tracksService.update(updateTrackInput.id, updateTrackInput);
+    return this.tracksService.update(updateTrackInput);
   }
 
   @Mutation('removeTrack')
-  remove(@Args('id') id: number) {
+  remove(@Args('id') id: string) {
     return this.tracksService.remove(id);
   }
 }

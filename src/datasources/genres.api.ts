@@ -1,37 +1,33 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
-import { Genre } from '../graphql';
+import { CreateGenreInput, Genre, UpdateGenreInput } from '../graphql';
+import { ListGenreEntity } from '../genres/entities/list-genre.entity';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class GenresAPI extends RESTDataSource {
   constructor() {
     super();
     this.baseURL = 'http://localhost:3001/v1/genres';
   }
 
-  async getGenres(): Promise<Genre[]> {
-    const genres = await this.get('genres');
-    return genres;
+  async getGenres(paginationQuery): Promise<ListGenreEntity> {
+    const { limit, offset } = paginationQuery;
+    return await this.get(`?limit=${limit}&offset=${offset}`);
   }
 
-  async getGenre(id: number): Promise<Genre> {
-    const genre = await this.get(`genres/${encodeURIComponent(id)}`);
-    return genre;
+  async getGenre(id: string): Promise<Genre> {
+    return await this.get(`genres/${encodeURIComponent(id)}`);
   }
 
-  async createGenre(genre: Genre): Promise<Genre> {
-    const newGenre = await this.post('genres', genre);
-    return newGenre;
+  async createGenre(genre: CreateGenreInput): Promise<Genre> {
+    return await this.post('genres', JSON.stringify(genre));
   }
 
-  async updateGenre(genre: Genre): Promise<Genre> {
-    const updatedGenre = await this.put(
-      `genres/${encodeURIComponent(genre.id)}`,
-      genre,
-    );
-    return updatedGenre;
+  async updateGenre(genre: UpdateGenreInput): Promise<Genre> {
+    return await this.put(`genres/${encodeURIComponent(genre.id)}`, genre);
   }
 
-  async deleteGenre(id: number): Promise<Genre> {
-    const deletedGenre = await this.delete(`genres/${encodeURIComponent(id)}`);
-    return deletedGenre;
+  async deleteGenre(id: string): Promise<Genre> {
+    return await this.delete(`genres/${encodeURIComponent(id)}`);
   }
 }

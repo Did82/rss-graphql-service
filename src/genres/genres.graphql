@@ -1,9 +1,16 @@
 type Genre {
-    id: ID!
+    _id: ID!
     name: String
     description: String
     country: String
     year: Int
+}
+
+type Genres {
+    items: [Genre]
+    limit: Int
+    offset: Int
+    total: Int
 }
 
 input CreateGenreInput {
@@ -14,16 +21,16 @@ input CreateGenreInput {
 }
 
 input UpdateGenreInput {
-  id: Int!
+    id: ID!
 }
 
 type Query {
-  genres: [Genre]!
-  genre(id: Int!): Genre
+    genres(limit: Int, offset: Int): Genres
+    genre(id: ID!): Genre
 }
 
 type Mutation {
-  createGenre(createGenreInput: CreateGenreInput!): Genre!
-  updateGenre(updateGenreInput: UpdateGenreInput!): Genre!
-  removeGenre(id: Int!): Genre
+    createGenre(createGenreInput: CreateGenreInput!): Genre!
+    updateGenre(updateGenreInput: UpdateGenreInput!): Genre!
+    removeGenre(id: ID!): Genre
 }

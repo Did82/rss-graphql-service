@@ -20,16 +20,16 @@ input CreateTrackInput {
 }
 
 input UpdateTrackInput {
-    id: Int!
+    id: ID!
 }
 
 type Query {
     tracks: [Track]!
-    track(id: Int!): Track
+    track(id: ID!): Track
 }
 
 type Mutation {
     createTrack(createTrackInput: CreateTrackInput!): Track!
     updateTrack(updateTrackInput: UpdateTrackInput!): Track!
-    removeTrack(id: Int!): Track
+    removeTrack(id: ID!): Track
 }

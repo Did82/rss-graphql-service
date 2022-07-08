@@ -16,16 +16,16 @@ input CreateBandInput {
 }
 
 input UpdateBandInput {
-  id: Int!
+  id: ID!
 }
 
 type Query {
   bands: [Band]!
-  band(id: Int!): Band
+  band(id: ID!): Band
 }
 
 type Mutation {
   createBand(createBandInput: CreateBandInput!): Band!
   updateBand(updateBandInput: UpdateBandInput!): Band!
-  removeBand(id: Int!): Band
+  removeBand(id: ID!): Band
 }

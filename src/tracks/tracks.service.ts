@@ -1,26 +1,28 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTrackInput } from './dto/create-track.input';
 import { UpdateTrackInput } from './dto/update-track.input';
+import { TracksAPI } from '../datasources/tracks.api';
 
 @Injectable()
 export class TracksService {
+  constructor(private readonly tracksAPI: TracksAPI) {}
   create(createTrackInput: CreateTrackInput) {
-    return 'This action adds a new track';
+    return this.tracksAPI.createTrack(createTrackInput);
   }
 
   findAll() {
-    return `This action returns all tracks`;
+    return this.tracksAPI.getTracks();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} track`;
+  findOne(id: string) {
+    return this.tracksAPI.getTrack(id);
   }
 
-  update(id: number, updateTrackInput: UpdateTrackInput) {
-    return `This action updates a #${id} track`;
+  update(updateTrackInput: UpdateTrackInput) {
+    return this.tracksAPI.updateTrack(updateTrackInput);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} track`;
+  remove(id: string) {
+    return this.tracksAPI.deleteTrack(id);
   }
 }

@@ -1,5 +1,5 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
-import { User } from '../graphql';
+import { CreateUserInput, UpdateUserInput, User } from '../graphql';
 
 export class UsersAPI extends RESTDataSource {
   constructor() {
@@ -8,30 +8,26 @@ export class UsersAPI extends RESTDataSource {
   }
 
   async getUsers(): Promise<User[]> {
-    const users = await this.get('users');
-    return users;
+    return await this.get('users');
   }
 
-  async getUser(id: number): Promise<User> {
-    const user = await this.get(`users/${encodeURIComponent(id)}`);
-    return user;
+  async getUser(id: string): Promise<User> {
+    return await this.get(`users/${encodeURIComponent(id)}`);
   }
 
-  async createUser(user: User): Promise<User> {
-    const newUser = await this.post('users', user);
-    return newUser;
+  async registerUser(user: CreateUserInput): Promise<User> {
+    return await this.post('users', user);
   }
 
-  async updateUser(user: User): Promise<User> {
-    const updatedUser = await this.put(
-      `users/${encodeURIComponent(user.id)}`,
-      user,
-    );
-    return updatedUser;
+  async updateUser(user: UpdateUserInput): Promise<User> {
+    return await this.put(`users/${encodeURIComponent(user.id)}`, user);
   }
 
-  async deleteUser(id: number): Promise<User> {
-    const deletedUser = await this.delete(`users/${encodeURIComponent(id)}`);
-    return deletedUser;
+  async deleteUser(id: string): Promise<User> {
+    return await this.delete(`users/${encodeURIComponent(id)}`);
+  }
+
+  async loginUser(email: string, password: string): Promise<User> {
+    return await this.post('login', { email, password });
   }
 }

@@ -1,5 +1,5 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
-import { Band } from '../graphql';
+import { Band, CreateBandInput, UpdateBandInput } from '../graphql';
 
 export class BandsAPI extends RESTDataSource {
   constructor() {
@@ -8,30 +8,22 @@ export class BandsAPI extends RESTDataSource {
   }
 
   async getBands(): Promise<Band[]> {
-    const bands = await this.get('bands');
-    return bands;
+    return await this.get('bands');
   }
 
-  async getBand(id: number): Promise<Band> {
-    const band = await this.get(`bands/${encodeURIComponent(id)}`);
-    return band;
+  async getBand(id: string): Promise<Band> {
+    return await this.get(`bands/${encodeURIComponent(id)}`);
   }
 
-  async createBand(band: Band): Promise<Band> {
-    const newBand = await this.post('bands', band);
-    return newBand;
+  async createBand(band: CreateBandInput): Promise<Band> {
+    return await this.post('bands', band);
   }
 
-  async updateBand(band: Band): Promise<Band> {
-    const updatedBand = await this.put(
-      `bands/${encodeURIComponent(band.id)}`,
-      band,
-    );
-    return updatedBand;
+  async updateBand(band: UpdateBandInput): Promise<Band> {
+    return await this.put(`bands/${encodeURIComponent(band.id)}`, band);
   }
 
-  async deleteBand(id: number): Promise<Band> {
-    const deletedBand = await this.delete(`bands/${encodeURIComponent(id)}`);
-    return deletedBand;
+  async deleteBand(id: string): Promise<Band> {
+    return await this.delete(`bands/${encodeURIComponent(id)}`);
   }
 }

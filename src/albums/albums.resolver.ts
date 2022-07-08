@@ -18,17 +18,17 @@ export class AlbumsResolver {
   }
 
   @Query('album')
-  findOne(@Args('id') id: number) {
+  findOne(@Args('id') id: string) {
     return this.albumsService.findOne(id);
   }
 
   @Mutation('updateAlbum')
   update(@Args('updateAlbumInput') updateAlbumInput: UpdateAlbumInput) {
-    return this.albumsService.update(updateAlbumInput.id, updateAlbumInput);
+    return this.albumsService.update(updateAlbumInput);
   }
 
   @Mutation('removeAlbum')
-  remove(@Args('id') id: number) {
+  remove(@Args('id') id: string) {
     return this.albumsService.remove(id);
   }
 }
