@@ -1,55 +1,86 @@
 import { Injectable } from '@nestjs/common';
 import { CreateGenreInput } from './dto/create-genre.input';
 import { UpdateGenreInput } from './dto/update-genre.input';
-import { GenresAPI } from '../datasources/genres.api';
 import { ListGenreInput } from './dto/lists-genre.input';
 import axios from 'axios';
 
 @Injectable()
 export class GenresService {
   private client: any;
-  constructor(private readonly genresAPI: GenresAPI) {
+  constructor() {
     this.client = axios.create({
-      baseURL: 'http://localhost:3001/v1/',
+      baseURL: 'http://localhost:3001/v1/genres',
     });
   }
 
-  create(createGenreInput: CreateGenreInput) {
-    return this.genresAPI.createGenre(createGenreInput);
+  async create(createGenreInput: CreateGenreInput) {
+    this.client
+      .post('', createGenreInput)
+      .then((response) => {
+        if (response.status === 200) {
+          return response.data;
+        } else {
+          return null;
+        }
+      })
+      .catch((error) => {
+        console.error(error.message);
+        return null;
+      });
   }
 
   async findAll(paginationQuery: ListGenreInput) {
     try {
       const { limit, offset } = paginationQuery;
       const response = await this.client.get(
-        `genres?limit=${limit}&offset=${offset}`,
+        `?limit=${limit}&offset=${offset}`,
       );
-      return response.data;
+      if (response.status === 200) {
+        return response.data;
+      } else {
+        return null;
+      }
     } catch (error) {
-      console.log(error);
+      console.error(error.message);
     }
-    // try {
-    //   const { limit, offset } = paginationQuery;
-    //   return await this.genresAPI.getGenres({ limit, offset });
-    // } catch (error) {
-    //   console.log(error);
-    // }
   }
 
   async findOne(id: string) {
     try {
-      const response = await this.client.get(`genres/${id}`);
-      return response.data;
+      const response = await this.client.get(`/${id}`);
+      if (response.status === 200) {
+        return response.data;
+      } else {
+        return null;
+      }
     } catch (error) {
-      console.log(error);
+      console.error(error.message);
     }
   }
 
-  update(updateGenreInput: UpdateGenreInput) {
-    return this.genresAPI.updateGenre(updateGenreInput);
+  async update(updateGenreInput: UpdateGenreInput) {
+    this.client
+      .put(`/${updateGenreInput.id}`, updateGenreInput)
+      .then((response) => {
+        if (response.status === 200) {
+          return response.data;
+        } else {
+          return null;
+        }
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
   }
 
-  remove(id: string) {
-    return this.genresAPI.deleteGenre(id);
+  async remove(id: string) {
+    this.client
+      .delete(`/${id}`)
+      .then((response) => {
+        return response.status === 200;
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
   }
 }

@@ -113,16 +113,23 @@ export class Album {
     image?: Nullable<string>;
 }
 
+export class Albums {
+    items?: Nullable<Nullable<Album>[]>;
+    total?: Nullable<number>;
+    offset?: Nullable<number>;
+    limit?: Nullable<number>;
+}
+
 export abstract class IQuery {
-    abstract albums(): Nullable<Album>[] | Promise<Nullable<Album>[]>;
+    abstract albums(limit?: Nullable<number>, offset?: Nullable<number>): Albums | Promise<Albums>;
 
     abstract album(id: string): Nullable<Album> | Promise<Nullable<Album>>;
 
-    abstract artists(): Nullable<Artist>[] | Promise<Nullable<Artist>[]>;
+    abstract artists(limit?: Nullable<number>, offset?: Nullable<number>): Artists | Promise<Artists>;
 
     abstract artist(id: string): Nullable<Artist> | Promise<Nullable<Artist>>;
 
-    abstract bands(): Nullable<Band>[] | Promise<Nullable<Band>[]>;
+    abstract bands(limit?: Nullable<number>, offset?: Nullable<number>): Bands | Promise<Bands>;
 
     abstract band(id: string): Nullable<Band> | Promise<Nullable<Band>>;
 
@@ -130,11 +137,11 @@ export abstract class IQuery {
 
     abstract favorite(id: string): Nullable<Favorite> | Promise<Nullable<Favorite>>;
 
-    abstract genres(limit?: Nullable<number>, offset?: Nullable<number>): Nullable<Genres> | Promise<Nullable<Genres>>;
+    abstract genres(limit?: Nullable<number>, offset?: Nullable<number>): Genres | Promise<Genres>;
 
     abstract genre(id: string): Nullable<Genre> | Promise<Nullable<Genre>>;
 
-    abstract tracks(): Nullable<Track>[] | Promise<Nullable<Track>[]>;
+    abstract tracks(limit?: Nullable<number>, offset?: Nullable<number>): Tracks | Promise<Tracks>;
 
     abstract track(id: string): Nullable<Track> | Promise<Nullable<Track>>;
 
@@ -172,7 +179,7 @@ export abstract class IMutation {
 
     abstract updateGenre(updateGenreInput: UpdateGenreInput): Genre | Promise<Genre>;
 
-    abstract removeGenre(id: string): Nullable<Genre> | Promise<Nullable<Genre>>;
+    abstract removeGenre(id: string): Nullable<boolean> | Promise<Nullable<boolean>>;
 
     abstract createTrack(createTrackInput: CreateTrackInput): Track | Promise<Track>;
 
@@ -201,6 +208,13 @@ export class Artist {
     instruments?: Nullable<Nullable<string>[]>;
 }
 
+export class Artists {
+    items?: Nullable<Nullable<Artist>[]>;
+    limit?: Nullable<number>;
+    offset?: Nullable<number>;
+    total?: Nullable<number>;
+}
+
 export class Band {
     id: string;
     name?: Nullable<string>;
@@ -208,6 +222,13 @@ export class Band {
     members?: Nullable<Nullable<Artist>[]>;
     website?: Nullable<string>;
     genres?: Nullable<Nullable<Genre>[]>;
+}
+
+export class Bands {
+    items?: Nullable<Nullable<Band>[]>;
+    limit?: Nullable<number>;
+    offset?: Nullable<number>;
+    total?: Nullable<number>;
 }
 
 export class Favorite {
@@ -243,6 +264,13 @@ export class Track {
     duration?: Nullable<number>;
     released?: Nullable<number>;
     genres?: Nullable<Nullable<Genre>[]>;
+}
+
+export class Tracks {
+    items?: Nullable<Nullable<Track>[]>;
+    limit?: Nullable<number>;
+    offset?: Nullable<number>;
+    total?: Nullable<number>;
 }
 
 export class User {

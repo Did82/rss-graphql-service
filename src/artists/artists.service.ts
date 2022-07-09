@@ -1,29 +1,80 @@
 import { Injectable } from '@nestjs/common';
 import { CreateArtistInput } from './dto/create-artist.input';
 import { UpdateArtistInput } from './dto/update-artist.input';
-import { ArtistsAPI } from '../datasources/artists.api';
+import axios from 'axios';
+import { ListArtistsInput } from './dto/list-artists.input';
 
 @Injectable()
 export class ArtistsService {
-  constructor(private readonly artistsAPI: ArtistsAPI) {}
-
-  create(createArtistInput: CreateArtistInput) {
-    return this.artistsAPI.createArtist(createArtistInput);
+  private client;
+  constructor() {
+    this.client = axios.create({
+      baseURL: 'http://localhost:3002/v1/artists',
+    });
   }
 
-  findAll() {
-    return this.artistsAPI.getArtists();
+  async create(createArtistInput: CreateArtistInput) {
+    this.client
+      .post('/', createArtistInput)
+      .then((res) => {
+        return res.data;
+      })
+      .catch((err) => {
+        console.error(err.message);
+        return null;
+      });
   }
 
-  findOne(id: string) {
-    return this.artistsAPI.getArtist(id);
+  async findAll(paginationQuery: ListArtistsInput) {
+    try {
+      const { limit, offset } = paginationQuery;
+      const response = await this.client.get(
+        `?limit=${limit}&offset=${offset}`,
+      );
+      if (response.status === 200) {
+        return response.data;
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.error(error.message);
+    }
   }
 
-  update(updateArtistInput: UpdateArtistInput) {
-    return this.artistsAPI.updateArtist(updateArtistInput);
+  async findOne(id: string) {
+    try {
+      const response = await this.client.get(`/${id}`);
+      if (response.status === 200) {
+        return response.data;
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.error(error.message);
+    }
   }
 
-  remove(id: string) {
-    return this.artistsAPI.deleteArtist(id);
+  async update(updateArtistInput: UpdateArtistInput) {
+    this.client
+      .put('/', updateArtistInput)
+      .then((res) => {
+        return res.data;
+      })
+      .catch((err) => {
+        console.error(err.message);
+        return null;
+      });
+  }
+
+  async remove(id: string) {
+    this.client
+      .delete(`/${id}`)
+      .then((res) => {
+        return res.status === 200;
+      })
+      .catch((err) => {
+        console.error(err.message);
+        return false;
+      });
   }
 }

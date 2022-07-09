@@ -9,6 +9,13 @@ type Track {
     genres: [Genre]
 }
 
+type Tracks {
+    items: [Track]
+    limit: Int
+    offset: Int
+    total: Int
+}
+
 input CreateTrackInput {
     title: String!
     album: ID
@@ -24,7 +31,7 @@ input UpdateTrackInput {
 }
 
 type Query {
-    tracks: [Track]!
+    tracks(limit: Int, offset: Int): Tracks!
     track(id: ID!): Track
 }
 

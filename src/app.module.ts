@@ -9,13 +9,6 @@ import { AlbumsModule } from './albums/albums.module';
 import { TracksModule } from './tracks/tracks.module';
 import { FavoritesModule } from './favorites/favorites.module';
 import { UsersModule } from './users/users.module';
-import { ArtistsAPI } from './datasources/artists.api';
-import { BandsAPI } from './datasources/bands.api';
-import { GenresAPI } from './datasources/genres.api';
-import { AlbumsAPI } from './datasources/albums.api';
-import { TracksAPI } from './datasources/tracks.api';
-import { FavoritesAPI } from './datasources/favorites.api';
-import { UsersAPI } from './datasources/users.api';
 
 @Module({
   imports: [
@@ -27,17 +20,6 @@ import { UsersAPI } from './datasources/users.api';
       definitions: {
         path: join(process.cwd(), 'src/graphql.ts'),
         outputAs: 'class',
-      },
-      dataSources: () => {
-        return {
-          ArtistsAPI: new ArtistsAPI(),
-          BandsAPI: new BandsAPI(),
-          GenresAPI: new GenresAPI(),
-          AlbumsAPI: new AlbumsAPI(),
-          TracksAPI: new TracksAPI(),
-          FavoritesAPI: new FavoritesAPI(),
-          UsersAPI: new UsersAPI(),
-        };
       },
     }),
     ArtistsModule,

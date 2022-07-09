@@ -1,6 +1,6 @@
 import { Genre } from '../../graphql';
 
-export class ListGenreEntity {
+export class ListGenreResponse {
   items: Genre[];
   limit: number;
   offset: number;

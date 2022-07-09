@@ -1,29 +1,24 @@
 import { Injectable } from '@nestjs/common';
 import { CreateFavoriteInput } from './dto/create-favorite.input';
 import { UpdateFavoriteInput } from './dto/update-favorite.input';
-import { FavoritesAPI } from '../datasources/favorites.api';
+import axios from 'axios';
 
 @Injectable()
 export class FavoritesService {
-  constructor(private readonly favoritesAPI: FavoritesAPI) {}
-
-  create(createFavoriteInput: CreateFavoriteInput) {
-    return this.favoritesAPI.createFavorite(createFavoriteInput);
+  private client;
+  constructor() {
+    this.client = axios.create({
+      baseURL: 'http://localhost:3007/api/v1/favorites',
+    });
   }
 
-  findAll() {
-    return this.favoritesAPI.getFavorites();
-  }
+  create(createFavoriteInput: CreateFavoriteInput) {}
 
-  findOne(id: string) {
-    return this.favoritesAPI.getFavorite(id);
-  }
+  findAll() {}
 
-  update(updateFavoriteInput: UpdateFavoriteInput) {
-    return this.favoritesAPI.updateFavorite(updateFavoriteInput);
-  }
+  findOne(id: string) {}
 
-  remove(id: string) {
-    return this.favoritesAPI.deleteFavorite(id);
-  }
+  update(updateFavoriteInput: UpdateFavoriteInput) {}
+
+  remove(id: string) {}
 }

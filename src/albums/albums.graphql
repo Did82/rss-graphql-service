@@ -9,6 +9,13 @@ type Album {
     image: String
 }
 
+type Albums {
+    items: [Album]
+    total: Int
+    offset: Int
+    limit: Int
+}
+
 input CreateAlbumInput {
     name: String
     released: Int
@@ -24,7 +31,7 @@ input UpdateAlbumInput {
 }
 
 type Query {
-  albums: [Album]!
+  albums(limit: Int, offset: Int): Albums!
   album(id: ID!): Album
 }
 

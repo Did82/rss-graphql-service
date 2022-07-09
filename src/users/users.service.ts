@@ -1,33 +1,26 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
-import { UsersAPI } from '../datasources/users.api';
+import axios from 'axios';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly usersAPI: UsersAPI) {}
-
-  register(createUserInput: CreateUserInput) {
-    return this.usersAPI.registerUser(createUserInput);
+  private client;
+  constructor() {
+    this.client = axios.create({
+      baseURL: 'http://localhost:3004/v1/users',
+    });
   }
 
-  findAll() {
-    return this.usersAPI.getUsers();
-  }
+  register(createUserInput: CreateUserInput) {}
 
-  findOne(id: string) {
-    return this.usersAPI.getUser(id);
-  }
+  findAll() {}
 
-  update(updateUserInput: UpdateUserInput) {
-    return this.usersAPI.updateUser(updateUserInput);
-  }
+  findOne(id: string) {}
 
-  remove(id: string) {
-    return this.usersAPI.deleteUser(id);
-  }
+  update(updateUserInput: UpdateUserInput) {}
 
-  login(email: string, password: string) {
-    return this.usersAPI.loginUser(email, password);
-  }
+  remove(id: string) {}
+
+  login(email: string, password: string) {}
 }

@@ -7,6 +7,13 @@ type Band {
     genres: [Genre]
 }
 
+type Bands {
+    items: [Band]
+    limit: Int
+    offset: Int
+    total: Int
+}
+
 input CreateBandInput {
     name: String
     origin: String
@@ -20,7 +27,7 @@ input UpdateBandInput {
 }
 
 type Query {
-  bands: [Band]!
+  bands(limit: Int, offset: Int): Bands!
   band(id: ID!): Band
 }
 

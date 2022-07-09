@@ -1,7 +1,10 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { TracksService } from './tracks.service';
 import { CreateTrackInput } from './dto/create-track.input';
 import { UpdateTrackInput } from './dto/update-track.input';
+import { ListTracksInput } from './dto/list-track.input';
+import { ListTracksResponse } from './entities/track.entity';
+import { ListArtistsInput } from '../artists/dto/list-artists.input';
 
 @Resolver('Track')
 export class TracksResolver {
@@ -13,8 +16,11 @@ export class TracksResolver {
   }
 
   @Query('tracks')
-  findAll() {
-    return this.tracksService.findAll();
+  findAll(
+    @Args() paginationQuery: ListArtistsInput,
+  ): Promise<ListTracksResponse> {
+    const { limit = 5, offset = 0 } = paginationQuery;
+    return this.tracksService.findAll({ limit, offset });
   }
 
   @Query('track')

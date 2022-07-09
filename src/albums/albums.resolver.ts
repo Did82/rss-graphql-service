@@ -2,6 +2,7 @@ import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { AlbumsService } from './albums.service';
 import { CreateAlbumInput } from './dto/create-album.input';
 import { UpdateAlbumInput } from './dto/update-album.input';
+import { ListAlbumInput } from './dto/list-album.input';
 
 @Resolver('Album')
 export class AlbumsResolver {
@@ -13,8 +14,8 @@ export class AlbumsResolver {
   }
 
   @Query('albums')
-  findAll() {
-    return this.albumsService.findAll();
+  findAll(@Args() paginationQuery?: ListAlbumInput) {
+    return this.albumsService.findAll(paginationQuery);
   }
 
   @Query('album')

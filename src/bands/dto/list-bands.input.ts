@@ -1,7 +1,7 @@
 import { Field, InputType } from '@nestjs/graphql';
 
 @InputType()
-export class ListGenreInput {
+export class ListBandsInput {
   @Field()
   limit: number;
 

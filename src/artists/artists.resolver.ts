@@ -2,6 +2,8 @@ import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { ArtistsService } from './artists.service';
 import { CreateArtistInput } from './dto/create-artist.input';
 import { UpdateArtistInput } from './dto/update-artist.input';
+import { ListAlbumResponse } from '../albums/entities/album.entity';
+import { ListArtistsInput } from './dto/list-artists.input';
 
 @Resolver('Artist')
 export class ArtistsResolver {
@@ -13,8 +15,10 @@ export class ArtistsResolver {
   }
 
   @Query('artists')
-  findAll() {
-    return this.artistsService.findAll();
+  findAll(
+    @Args() paginationQuery: ListArtistsInput,
+  ): Promise<ListAlbumResponse> {
+    return this.artistsService.findAll(paginationQuery);
   }
 
   @Query('artist')

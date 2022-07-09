@@ -2,6 +2,7 @@ import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { BandsService } from './bands.service';
 import { CreateBandInput } from './dto/create-band.input';
 import { UpdateBandInput } from './dto/update-band.input';
+import { ListBandsInput } from './dto/list-bands.input';
 
 @Resolver('Band')
 export class BandsResolver {
@@ -13,8 +14,8 @@ export class BandsResolver {
   }
 
   @Query('bands')
-  findAll() {
-    return this.bandsService.findAll();
+  findAll(@Args('bands') paginationQuery: ListBandsInput) {
+    return this.bandsService.findAll(paginationQuery);
   }
 
   @Query('band')

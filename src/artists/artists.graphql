@@ -10,6 +10,13 @@ type Artist {
     instruments: [String]
 }
 
+type Artists {
+    items: [Artist]
+    limit: Int
+    offset: Int
+    total: Int
+}
+
 input CreateArtistInput {
     firstName: String
     secondName: String
@@ -32,7 +39,7 @@ input UpdateArtistInput {
 }
 
 type Query {
-    artists: [Artist]!
+    artists(limit: Int, offset: Int): Artists!
     artist(id: ID!): Artist
 }
 
