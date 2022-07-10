@@ -12,13 +12,63 @@ export class FavoritesService {
     });
   }
 
-  create(createFavoriteInput: CreateFavoriteInput) {}
+  create(createFavoriteInput: CreateFavoriteInput) {
+    return this.client
+      .post('/', createFavoriteInput)
+      .then((res) => {
+        return res.data;
+      })
+      .catch((err) => {
+        console.error(err.message);
+        return null;
+      });
+  }
 
-  findAll() {}
+  findAll() {
+    return this.client
+      .get('/')
+      .then((res) => {
+        return res.data;
+      })
+      .catch((err) => {
+        console.error(err.message);
+        return null;
+      });
+  }
 
-  findOne(id: string) {}
+  findOne(id: string) {
+    return this.client
+      .get(`/${id}`)
+      .then((res) => {
+        return res.data;
+      })
+      .catch((err) => {
+        console.error(err.message);
+        return null;
+      });
+  }
 
-  update(updateFavoriteInput: UpdateFavoriteInput) {}
+  update(updateFavoriteInput: UpdateFavoriteInput) {
+    return this.client
+      .put(`/${updateFavoriteInput.id}`, updateFavoriteInput)
+      .then((res) => {
+        return res.data;
+      })
+      .catch((err) => {
+        console.error(err.message);
+        return null;
+      });
+  }
 
-  remove(id: string) {}
+  remove(id: string) {
+    return this.client
+      .delete(`/${id}`)
+      .then((res) => {
+        return res.data;
+      })
+      .catch((err) => {
+        console.error(err.message);
+        return null;
+      });
+  }
 }
