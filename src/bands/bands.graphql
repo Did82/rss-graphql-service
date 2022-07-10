@@ -1,0 +1,38 @@
+type Band {
+    _id: ID!
+    name: String
+    origin: String
+    members: [Artist]
+    website: String
+    genres: [Genre]
+}
+
+type Bands {
+    items: [Band]
+    limit: Int
+    offset: Int
+    total: Int
+}
+
+input CreateBandInput {
+    name: String
+    origin: String
+    members: [ID]
+    website: String
+    genres: [ID]
+}
+
+input UpdateBandInput {
+  _id: ID!
+}
+
+type Query {
+  bands(limit: Int, offset: Int): Bands!
+  band(id: ID!): Band
+}
+
+type Mutation {
+  createBand(createBandInput: CreateBandInput!): Band!
+  updateBand(updateBandInput: UpdateBandInput!): Band!
+  removeBand(id: ID!): Band
+}

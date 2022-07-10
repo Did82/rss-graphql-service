@@ -1,0 +1,37 @@
+type User {
+    _id: ID!
+    firstName: String
+    lastName: String
+    password: String
+    email: String!
+}
+
+input CreateUserInput {
+    firstName: String
+    lastName: String
+    password: String!
+    email: String!
+}
+
+type LoginResponse {
+    jwt: String
+}
+
+input LoginUserInput {
+    email: String!
+    password: String!
+}
+
+input UpdateUserInput {
+    _id: ID!
+}
+
+type Query {
+    users: [User]!
+    user(id: ID!): User
+}
+
+type Mutation {
+    registerUser(createUserInput: CreateUserInput!): User!
+    loginUser(loginUserInput: LoginUserInput): LoginResponse
+}
