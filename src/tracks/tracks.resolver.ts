@@ -4,7 +4,6 @@ import { CreateTrackInput } from './dto/create-track.input';
 import { UpdateTrackInput } from './dto/update-track.input';
 import { ListTracksInput } from './dto/list-track.input';
 import { ListTracksResponse } from './entities/track.entity';
-import { ListArtistsInput } from '../artists/dto/list-artists.input';
 
 @Resolver('Track')
 export class TracksResolver {
@@ -16,11 +15,10 @@ export class TracksResolver {
   }
 
   @Query('tracks')
-  findAll(
-    @Args() paginationQuery: ListArtistsInput,
+  async findAll(
+    @Args() paginationQuery: ListTracksInput,
   ): Promise<ListTracksResponse> {
-    const { limit = 5, offset = 0 } = paginationQuery;
-    return this.tracksService.findAll({ limit, offset });
+    return await this.tracksService.findAll(paginationQuery);
   }
 
   @Query('track')

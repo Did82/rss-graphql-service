@@ -1,5 +1,5 @@
 type Artist {
-    id: ID!
+    _id: ID!
     firstName: String
     secondName: String
     middleName: String
@@ -28,7 +28,7 @@ input CreateArtistInput {
 }
 
 input UpdateArtistInput {
-    id: ID!
+    _id: ID!
     firstName: String
     secondName: String
     middleName: String

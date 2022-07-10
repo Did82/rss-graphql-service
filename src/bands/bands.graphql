@@ -1,5 +1,5 @@
 type Band {
-    id: ID!
+    _id: ID!
     name: String
     origin: String
     members: [Artist]
@@ -23,7 +23,7 @@ input CreateBandInput {
 }
 
 input UpdateBandInput {
-  id: ID!
+  _id: ID!
 }
 
 type Query {

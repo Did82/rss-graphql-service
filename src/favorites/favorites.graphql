@@ -1,5 +1,5 @@
 type Favorite {
-    id: ID!
+    _id: ID!
     userId: ID
     bands: [Band]
     genres: [Genre]
@@ -16,7 +16,7 @@ input CreateFavoriteInput {
 }
 
 input UpdateFavoriteInput {
-  id: ID!
+  _id: ID!
 }
 
 type Query {

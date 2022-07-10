@@ -1,20 +1,29 @@
 type User {
-    id: ID!
+    _id: ID!
     firstName: String
-    secondName: String
+    lastName: String
     password: String
     email: String!
 }
 
 input CreateUserInput {
     firstName: String
-    secondName: String
-    password: String
+    lastName: String
+    password: String!
     email: String!
 }
 
+type LoginResponse {
+    jwt: String
+}
+
+input LoginUserInput {
+    email: String!
+    password: String!
+}
+
 input UpdateUserInput {
-    id: ID!
+    _id: ID!
 }
 
 type Query {
@@ -24,7 +33,5 @@ type Query {
 
 type Mutation {
     registerUser(createUserInput: CreateUserInput!): User!
-    updateUser(updateUserInput: UpdateUserInput!): User!
-    removeUser(id: ID!): User
-    loginUser(email: String!, password: String!): User
+    loginUser(loginUserInput: LoginUserInput): LoginResponse
 }

@@ -14,8 +14,8 @@ export class BandsResolver {
   }
 
   @Query('bands')
-  findAll(@Args('bands') paginationQuery: ListBandsInput) {
-    return this.bandsService.findAll(paginationQuery);
+  async findAll(@Args() paginationQuery: ListBandsInput) {
+    return await this.bandsService.findAll(paginationQuery);
   }
 
   @Query('band')

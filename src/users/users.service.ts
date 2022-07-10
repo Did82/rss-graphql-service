@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import axios from 'axios';
+import { LoginUserInput } from './dto/login-user.input';
 
 @Injectable()
 export class UsersService {
@@ -12,15 +13,38 @@ export class UsersService {
     });
   }
 
-  register(createUserInput: CreateUserInput) {}
+  async register(createUserInput: CreateUserInput) {
+    const user = { ...createUserInput };
+    return await this.client
+      .post('/register', user)
+      .then((res) => {
+        return res.data;
+      })
+      .catch((err) => {
+        console.error(err.message);
+        return null;
+      });
+  }
 
-  findAll() {}
+  findOne(id: string) {
+    try {
+      const response = this.client.get(`/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
 
-  findOne(id: string) {}
-
-  update(updateUserInput: UpdateUserInput) {}
-
-  remove(id: string) {}
-
-  login(email: string, password: string) {}
+  async login(loginUserInput: LoginUserInput) {
+    const user = { ...loginUserInput };
+    return await this.client
+      .post('/login', user)
+      .then((res) => {
+        return res.data;
+      })
+      .catch((err) => {
+        console.error(err.message);
+        return null;
+      });
+  }
 }

@@ -9,7 +9,7 @@ export class BandsService {
   private client;
   constructor() {
     this.client = axios.create({
-      baseURL: 'http://localhost:3005/v1/albums',
+      baseURL: 'http://localhost:3003/v1/bands',
     });
   }
 

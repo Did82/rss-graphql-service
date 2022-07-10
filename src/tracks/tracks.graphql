@@ -1,5 +1,5 @@
 type Track {
-    id: ID!
+    _id: ID!
     title: String!
     album: Album
     artists: [Artist]
@@ -27,7 +27,7 @@ input CreateTrackInput {
 }
 
 input UpdateTrackInput {
-    id: ID!
+    _id: ID!
 }
 
 type Query {

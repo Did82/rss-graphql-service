@@ -18,7 +18,7 @@ export class CreateAlbumInput {
 }
 
 export class UpdateAlbumInput {
-    id: string;
+    _id: string;
 }
 
 export class CreateArtistInput {
@@ -32,7 +32,7 @@ export class CreateArtistInput {
 }
 
 export class UpdateArtistInput {
-    id: string;
+    _id: string;
     firstName?: Nullable<string>;
     secondName?: Nullable<string>;
     middleName?: Nullable<string>;
@@ -51,7 +51,7 @@ export class CreateBandInput {
 }
 
 export class UpdateBandInput {
-    id: string;
+    _id: string;
 }
 
 export class CreateFavoriteInput {
@@ -63,7 +63,7 @@ export class CreateFavoriteInput {
 }
 
 export class UpdateFavoriteInput {
-    id: string;
+    _id: string;
 }
 
 export class CreateGenreInput {
@@ -74,7 +74,7 @@ export class CreateGenreInput {
 }
 
 export class UpdateGenreInput {
-    id: string;
+    _id: string;
 }
 
 export class CreateTrackInput {
@@ -88,22 +88,27 @@ export class CreateTrackInput {
 }
 
 export class UpdateTrackInput {
-    id: string;
+    _id: string;
 }
 
 export class CreateUserInput {
     firstName?: Nullable<string>;
-    secondName?: Nullable<string>;
-    password?: Nullable<string>;
+    lastName?: Nullable<string>;
+    password: string;
     email: string;
 }
 
+export class LoginUserInput {
+    email: string;
+    password: string;
+}
+
 export class UpdateUserInput {
-    id: string;
+    _id: string;
 }
 
 export class Album {
-    id: string;
+    _id: string;
     name?: Nullable<string>;
     released?: Nullable<number>;
     artists?: Nullable<Nullable<Artist>[]>;
@@ -189,15 +194,11 @@ export abstract class IMutation {
 
     abstract registerUser(createUserInput: CreateUserInput): User | Promise<User>;
 
-    abstract updateUser(updateUserInput: UpdateUserInput): User | Promise<User>;
-
-    abstract removeUser(id: string): Nullable<User> | Promise<Nullable<User>>;
-
-    abstract loginUser(email: string, password: string): Nullable<User> | Promise<Nullable<User>>;
+    abstract loginUser(loginUserInput?: Nullable<LoginUserInput>): Nullable<LoginResponse> | Promise<Nullable<LoginResponse>>;
 }
 
 export class Artist {
-    id: string;
+    _id: string;
     firstName?: Nullable<string>;
     secondName?: Nullable<string>;
     middleName?: Nullable<string>;
@@ -216,7 +217,7 @@ export class Artists {
 }
 
 export class Band {
-    id: string;
+    _id: string;
     name?: Nullable<string>;
     origin?: Nullable<string>;
     members?: Nullable<Nullable<Artist>[]>;
@@ -232,7 +233,7 @@ export class Bands {
 }
 
 export class Favorite {
-    id: string;
+    _id: string;
     userId?: Nullable<string>;
     bands?: Nullable<Nullable<Band>[]>;
     genres?: Nullable<Nullable<Genre>[]>;
@@ -256,7 +257,7 @@ export class Genres {
 }
 
 export class Track {
-    id: string;
+    _id: string;
     title: string;
     album?: Nullable<Album>;
     artists?: Nullable<Nullable<Artist>[]>;
@@ -274,11 +275,15 @@ export class Tracks {
 }
 
 export class User {
-    id: string;
+    _id: string;
     firstName?: Nullable<string>;
-    secondName?: Nullable<string>;
+    lastName?: Nullable<string>;
     password?: Nullable<string>;
     email: string;
+}
+
+export class LoginResponse {
+    jwt?: Nullable<string>;
 }
 
 type Nullable<T> = T | null;

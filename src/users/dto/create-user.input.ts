@@ -6,7 +6,7 @@ export class CreateUserInput {
   firstName: string;
 
   @Field()
-  secondName: string;
+  lastName: string;
 
   @Field()
   password: string;

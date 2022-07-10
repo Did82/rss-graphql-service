@@ -21,7 +21,7 @@ input CreateGenreInput {
 }
 
 input UpdateGenreInput {
-    id: ID!
+    _id: ID!
 }
 
 type Query {

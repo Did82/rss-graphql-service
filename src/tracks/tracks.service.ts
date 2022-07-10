@@ -9,7 +9,7 @@ export class TracksService {
   private client;
   constructor() {
     this.client = axios.create({
-      baseURL: 'http://localhost:3006/v1/genres',
+      baseURL: 'http://localhost:3006/v1/tracks',
     });
   }
 
